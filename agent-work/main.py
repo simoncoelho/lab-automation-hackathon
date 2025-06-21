@@ -3,31 +3,35 @@ from agents import Agent, Runner
 from agents.mcp.server import MCPServerStdio   # stdio • also see MCPServerSse / StreamableHTTP
 
 async def main():
-    # 2-a) connect to the joke MCP server –
-    #      The context-manager handles startup, shutdown, and automatic tracing
-    async with MCPServerStdio(
-        name="local_jokes",
-        params={
-            "command": "python",
-            "args": ["mcp_servers/joke_server.py"],  # path relative to cwd
-        },
-        cache_tools_list=True,          # skip list_tools() on every run (optional) :contentReference[oaicite:0]{index=0}
-    ) as joke_server:
-
-        # 2-b) define an Agent that knows about that server’s tools
-        assistant = Agent(
-            name="Joke Assistant",
+    arm_server = MCPServerStdio(
+            name="arm",
+            params={
+                "command": "python",
+                "args": ["mcp_servers/arm.py"],
+            },
+            cache_tools_list=True,
+        )
+    ot_server = MCPServerStdio(
+            name="ot",
+            params={
+                "command": "python",
+                "args": ["mcp_servers/ot.py"],
+            },
+            cache_tools_list=True,
+        )
+    async with arm_server as arm_server, ot_server as ot_server:
+        lab_manager = Agent(
+            name="Lab Manager",
             instructions=(
-                "You are a witty assistant. "
-                "Whenever it helps, call the Chuck Norris joke tool to spice things up."
+                "You are a lab manager. "
+                "Whenever it helps, call the arm and ot tools to help the user."
             ),
-            mcp_servers=[joke_server],  # this is all it takes :contentReference[oaicite:1]{index=1}
+            mcp_servers=[arm_server, ot_server],
         )
 
-        # 2-c) run the agent loop once
         result = await Runner.run(
-            assistant,
-            input="Tell me a joke about unit testing."
+            lab_manager,
+            input="Move a plate from slot 1 to slot 2 and run a pcr process."
         )
         print("\nFINAL ANSWER ↴\n", result.final_output)
 
