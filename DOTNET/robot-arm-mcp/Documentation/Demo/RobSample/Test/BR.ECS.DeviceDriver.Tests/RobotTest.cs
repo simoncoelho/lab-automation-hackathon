@@ -17,7 +17,7 @@ namespace BR.ECS.DeviceDriver.Tests
     {
         static async void Main()
         {
-            //初始化，设置socket连接的ip地址、端口号等，并进行连接
+            // Initialize, set the socket connection IP address, port, etc., and connect
             BYRobotSample robotDemo = new BYRobotSample();
             SocketCommunication socketCommunication = new SocketCommunication();
             socketCommunication.Init("192.168.3.200", 56788);
@@ -25,11 +25,11 @@ namespace BR.ECS.DeviceDriver.Tests
             ILog _log = new Log();
             Thread.Sleep(5000);
 
-            //以下示例与Lua示例程序mod001Socket1相对应，每次设置系统变量分别对应进入mod_Pick1()、mod_Place1()、mod_Pick2()、mod_Place2()的判断条件
-            //那么当机器人Lua程序获取到这些系统变量时，可以根据不同变量值进行不同的运动，且Api此时会进入等待状态回发消息中，机器人完成运动后需要在Lua程序中发送相关指令，之后才可判断是否设置系统变量成功
+            // The following example corresponds to the Lua sample program mod001Socket1. Each time the system variable is set, it corresponds to the condition for entering mod_Pick1(), mod_Place1(), mod_Pick2(), or mod_Place2().
+            // When the robot Lua program obtains these system variables, it can perform different movements according to different variable values. The API will enter a waiting state and send a message back. After the robot completes the movement, the Lua program needs to send related instructions before it can determine whether the system variable was set successfully.
             while (true)
             {
-                //下面函数为设置系统变量SYSINVAR0为1，SYSINVAR1为1，SYSINVAR2为1，SYSINVAR3为1，SYSINVAR4为1，SYSINVAR5为2
+                // The following function sets system variables: SYSINVAR0=1, SYSINVAR1=1, SYSINVAR2=1, SYSINVAR3=1, SYSINVAR4=1, SYSINVAR5=2
                 Dictionary<string, int> setSysValParamsModels1 = new Dictionary<string, int>
                 {
                         { "0", 1 },
@@ -39,22 +39,22 @@ namespace BR.ECS.DeviceDriver.Tests
                         { "4", 1 },
                         { "5", 2 },
                 };
-                // 设置系统变量，需要传入相应的系统变量数据
+                // Set system variables, need to pass in the corresponding system variable data
                 try
                 {
                     bool result = robotDemo.SetSysVarI(setSysValParamsModels1, 5 * 60 * 1000);
                     if (!result)
                     {
-                        _log.Info($"机器人 设置系统变量失败");
+                        _log.Info($"Robot failed to set system variable");
                     }
                 }
                 catch (Exception ex)
                 {
-                    _log.Info($"机器人 设置系统变量失败,失败原因：{ex.Message}");
+                    _log.Info($"Robot failed to set system variable, reason: {ex.Message}");
                     Console.ReadLine();
                 }
 
-                //下面函数为设置系统变量SYSINVAR0为1，SYSINVAR1为2，SYSINVAR2为2，SYSINVAR3为2，SYSINVAR4为2，SYSINVAR5为2
+                // The following function sets system variables: SYSINVAR0=1, SYSINVAR1=2, SYSINVAR2=2, SYSINVAR3=2, SYSINVAR4=2, SYSINVAR5=2
                 Dictionary<string, int> setSysValParamsModels2 = new Dictionary<string, int>
                 {
                         { "0", 1 },
@@ -70,16 +70,16 @@ namespace BR.ECS.DeviceDriver.Tests
                     var currenttime = DateTime.Now;
                     if (!result)
                     {
-                        _log.Info($"机器人 设置系统变量失败");
+                        _log.Info($"Robot failed to set system variable");
                     }
                 }
                 catch (Exception ex)
                 {
-                    _log.Info($"机器人 设置系统变量失败,失败原因：{ex.Message}");
+                    _log.Info($"Robot failed to set system variable, reason: {ex.Message}");
                     Console.ReadLine();
                 }
 
-                //下面函数为设置系统变量SYSINVAR0为1，SYSINVAR1为2，SYSINVAR2为2，SYSINVAR3为2，SYSINVAR4为1，SYSINVAR5为2
+                // The following function sets system variables: SYSINVAR0=1, SYSINVAR1=2, SYSINVAR2=2, SYSINVAR3=2, SYSINVAR4=1, SYSINVAR5=2
                 Dictionary<string, int> setSysValParamsModels3 = new Dictionary<string, int>
                 {
                         { "0", 1 },
@@ -95,16 +95,16 @@ namespace BR.ECS.DeviceDriver.Tests
                     var currenttime = DateTime.Now;
                     if (!result)
                     {
-                        _log.Info($"机器人 设置系统变量失败");
+                        _log.Info($"Robot failed to set system variable");
                     }
                 }
                 catch (Exception ex)
                 {
-                    _log.Info($"机器人 设置系统变量失败,失败原因：{ex.Message}");
+                    _log.Info($"Robot failed to set system variable, reason: {ex.Message}");
                     Console.ReadLine();
                 }
 
-                //下面函数为设置系统变量SYSINVAR0为1，SYSINVAR1为1，SYSINVAR2为1，SYSINVAR3为1，SYSINVAR4为2，SYSINVAR5为2
+                // The following function sets system variables: SYSINVAR0=1, SYSINVAR1=1, SYSINVAR2=1, SYSINVAR3=1, SYSINVAR4=2, SYSINVAR5=2
                 Dictionary<string, int> setSysValParamsModels4 = new Dictionary<string, int>
                 {
                         { "0", 1 },
@@ -120,19 +120,19 @@ namespace BR.ECS.DeviceDriver.Tests
                     var currenttime = DateTime.Now;
                     if (!result)
                     {
-                        _log.Info($"机器人 设置系统变量失败");
+                        _log.Info($"Robot failed to set system variable");
                     }
                 }
                 catch (Exception ex)
                 {
-                    _log.Info($"机器人 设置系统变量失败,失败原因：{ex.Message}");
+                    _log.Info($"Robot failed to set system variable, reason: {ex.Message}");
                     Console.ReadLine();
                 }
             }
 
             Thread.Sleep(20000);
 
-            //关闭与机器人的连接
+            // Close the connection to the robot
             robotDemo.Disconnect();
             Console.ReadLine();
         }
@@ -150,18 +150,18 @@ namespace BR.ECS.DeviceDriver.Tests
             ILog _log = new Log();
             Thread.Sleep(5000);
 
-            //以下示例与Lua示例程序mod001Socket2相对应，设置系统变量后会进入mod_InputPoint()
-            //那么当机器人Lua程序获取到这些系统变量时，可以根据不同变量值进行不同的运动，且Api此时会进入等待状态回发消息中，机器人完成运动后需要在Lua程序中发送相关指令，之后才可判断是否设置系统变量成功
+            // The following example corresponds to the Lua sample program mod001Socket2. After setting the system variable, it will enter mod_InputPoint().
+            // When the robot Lua program obtains these system variables, it can perform different movements according to different variable values. The API will enter a waiting state and send a message back. After the robot completes the movement, the Lua program needs to send related instructions before it can determine whether the system variable was set successfully.
             while (true)
             {
-                // 以下为系统参数
-                // index0 关节1的目标位置
-                // index1 关节2的目标位置
-                // index2 关节3的目标位置
-                // index3 关节4的目标位置
-                // index4 MOVL时是机器人关节最大运动速度，单位为mm/s；MOVJ、MOVABSJ、MOVEXTJ时是机器人关节运动速度与关节最大速度的比率，单位为%
-                // index5 MOVL时是融合区域轨迹长度，MOVJ、MOVABSJ、MOVEXTJ时是融合区域关节角度
-                // index6 在MOVEXTJ指令时控制外轴1（如夹爪）开合
+                // The following are system parameters
+                // index0: Target position of joint 1
+                // index1: Target position of joint 2
+                // index2: Target position of joint 3
+                // index3: Target position of joint 4
+                // index4: For MOVL, this is the robot joint max speed (mm/s); for MOVJ, MOVABSJ, MOVEXTJ, this is the ratio of joint speed to max speed (%)
+                // index5: For MOVL, this is the trajectory length of the blending area; for MOVJ, MOVABSJ, MOVEXTJ, this is the joint angle of the blending area
+                // index6: For MOVEXTJ command, controls external axis 1 (e.g., gripper) open/close
                 Dictionary<string, float> setSysParaF1 = new Dictionary<string, float>
                 {
                         { "0", 271.83f },
@@ -173,10 +173,10 @@ namespace BR.ECS.DeviceDriver.Tests
                         { "6", 0f }
                  };
 
-                // 以下为系统变量
-                // SYSINVAR0 至 SYSINVAR5 在第一个示例场景中已使用，该示例场景中不用时置为0
-                // SYSINVAR6 启用在上位机中传输点位功能
-                // SYSINVAR6 控制运动类型，1是MOVL，2是MOVJ，3是MOVABSJ，4是MOVEXTJ夹爪开，5是MOVEXTJ夹爪关
+                // The following are system variables
+                // SYSINVAR0 to SYSINVAR5 are used in the first example scenario, set to 0 when not used in this scenario
+                // SYSINVAR6: Enable point transfer function in the upper computer
+                // SYSINVAR7: Control motion type, 1=MOVL, 2=MOVJ, 3=MOVABSJ, 4=MOVEXTJ gripper open, 5=MOVEXTJ gripper close
                 Dictionary<string, int> setSysVal1 = new Dictionary<string, int>
                 {
                         { "0", 0 },
@@ -189,23 +189,23 @@ namespace BR.ECS.DeviceDriver.Tests
                         { "7", 3 },
                 };
                 robotDemo.SetSysParaF(setSysParaF1, 5 * 60 * 1000);
-                // MOVABSJ关节运动到第一个点位
+                // MOVABSJ joint moves to the first point
                 try
                 {
                     bool result = robotDemo.SetSysVarI(setSysVal1, 5 * 60 * 1000);
                     var currenttime = DateTime.Now;
                     if (!result)
                     {
-                        _log.Info($"机器人 设置系统变量失败");
+                        _log.Info($"Robot failed to set system variable");
                     }
                 }
                 catch (Exception ex)
                 {
-                    _log.Info($"机器人 设置系统变量失败,失败原因：{ex.Message}");
+                    _log.Info($"Robot failed to set system variable, reason: {ex.Message}");
                     Console.ReadLine();
                 }
 
-                // MOVL直线运动到第二个点位
+                // MOVL linear move to the second point
                 Dictionary<string, float> setSysParaF2 = new Dictionary<string, float>
                 {
                         { "0", 276.53f },
@@ -234,16 +234,16 @@ namespace BR.ECS.DeviceDriver.Tests
                     var currenttime = DateTime.Now;
                     if (!result)
                     {
-                        _log.Info($"机器人 设置系统变量失败");
+                        _log.Info($"Robot failed to set system variable");
                     }
                 }
                 catch (Exception ex)
                 {
-                    _log.Info($"机器人 设置系统变量失败,失败原因：{ex.Message}");
+                    _log.Info($"Robot failed to set system variable, reason: {ex.Message}");
                     Console.ReadLine();
                 }
 
-                // MOVJ关节运动到第三个点位
+                // MOVJ joint moves to the third point
                 Dictionary<string, float> setSysParaF3 = new Dictionary<string, float>
                 {
                         { "0", 426.93f },
@@ -272,16 +272,16 @@ namespace BR.ECS.DeviceDriver.Tests
                     var currenttime = DateTime.Now;
                     if (!result)
                     {
-                        _log.Info($"机器人 设置系统变量失败");
+                        _log.Info($"Robot failed to set system variable");
                     }
                 }
                 catch (Exception ex)
                 {
-                    _log.Info($"机器人 设置系统变量失败,失败原因：{ex.Message}");
+                    _log.Info($"Robot failed to set system variable, reason: {ex.Message}");
                     Console.ReadLine();
                 }
 
-                // MOVABSJ关节运动到第四个点位
+                // MOVABSJ joint moves to the fourth point
                 Dictionary<string, float> setSysParaF4 = new Dictionary<string, float>
                 {
                         { "0", 268.53f },
@@ -310,18 +310,18 @@ namespace BR.ECS.DeviceDriver.Tests
                     var currenttime = DateTime.Now;
                     if (!result)
                     {
-                        _log.Info($"机器人 设置系统变量失败");
+                        _log.Info($"Robot failed to set system variable");
                     }
                 }
                 catch (Exception ex)
                 {
-                    _log.Info($"机器人 设置系统变量失败,失败原因：{ex.Message}");
+                    _log.Info($"Robot failed to set system variable, reason: {ex.Message}");
                     Console.ReadLine();
                 }
             }
             Thread.Sleep(20000);
 
-            //关闭与机器人的连接           
+            // Close the connection to the robot           
             robotDemo.Disconnect();
             Console.ReadLine();
         }
