@@ -1,0 +1,25 @@
+{
+  "$schema": "http://json.schemastore.org/template",
+  "author": "Simon Coelho, Inc.",
+  "classifications": [ "console" ],
+  "name": "MCP Lab Automation",
+  "defaultName": "MCP Lab Automation",
+  "identity": "MCP.LabAutomation.Template",
+  "shortName": "MCPLabAutomation",
+  "tags": {
+    "language": "C#",
+    "type": "project"
+  },
+  "sourceName": "MCP.LabAutomation.Template",
+  "preferNameDirectory": true,
+  "symbols": {
+    "MCPName": {
+      "type": "parameter",
+      "description": "The name of the device for which the MCP is built. No spaces allowed.",
+      "datatype": "text",
+      "replaces": "MCPNAME",
+      "fileRename": "MCPNAME",
+      "isRequired": true
+    },
+  }
+}
