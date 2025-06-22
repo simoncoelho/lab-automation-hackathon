@@ -3,7 +3,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using ModelContextProtocol.Server;
 using System.ComponentModel;
-using robot_arm_mcp; // Adjust namespace as needed
+using MCP.LabAutomation; // Adjust namespace as needed
 
 // Create a generic host builder for
 // dependency injection, logging, and configuration.
@@ -22,7 +22,7 @@ builder.Services
     .WithStdioServerTransport()
     .WithToolsFromAssembly();
 
-builder.Services.AddSingleton<RobotController>();
+builder.Services.AddSingleton<DeviceController>();
 
 // Build and run the host. This starts the MCP server.
 await builder.Build().RunAsync();
