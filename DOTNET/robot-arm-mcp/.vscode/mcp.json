@@ -1,0 +1,14 @@
+{
+    "inputs": [],
+    "servers": {
+        "robot-arm-mcp": {
+            "type": "stdio",
+            "command": "dotnet",
+            "args": [
+                "run",
+                "--project",
+                "C:\\Users\\SimonCoelho\\source\\repos\\robot-arm-mcp\\robot-arm-mcp\\robot-arm-mcp.csproj"
+            ]
+        }
+    }
+}
