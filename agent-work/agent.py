@@ -3,53 +3,54 @@ from agents import Agent, Runner
 from agents.mcp.server import MCPServerStdio   # stdio • also see MCPServerSse / StreamableHTTP
 from agents import enable_verbose_stdout_logging
 
-async def main():
-    #enable_verbose_stdout_logging()
-    arm_server = MCPServerStdio(
+def create_mcp_servers():
+    """Create and return all MCP servers for the lab automation system."""
+    return [
+        MCPServerStdio(
             name="arm",
             params={
                 "command": "python",
                 "args": ["mcp_servers/arm.py"],
             },
             cache_tools_list=True,
-        )
-    ot_server = MCPServerStdio(
+        ),
+        MCPServerStdio(
             name="ot",
             params={
                 "command": "python",
                 "args": ["mcp_servers/ot.py"],
             },
             cache_tools_list=True,
-        )
-    sensor_server = MCPServerStdio(
+        ),
+        MCPServerStdio(
             name="sensor",
             params={
                 "command": "python",
                 "args": ["mcp_servers/sensor.py"],
             },
             cache_tools_list=True,
-        )
-    error_server = MCPServerStdio(
+        ),
+        MCPServerStdio(
             name="error",
             params={
                 "command": "python",
                 "args": ["mcp_servers/error.py"],
             },
             cache_tools_list=True,
-        )
-    lab_status_server = MCPServerStdio(
+        ),
+        MCPServerStdio(
             name="lab_status",
             params={
                 "command": "python",
                 "args": ["mcp_servers/lab_status.py"],
             },
             cache_tools_list=True,
-        )
-    async with arm_server as arm_server, ot_server as ot_server, sensor_server as sensor_server, error_server as error_server, lab_status_server as lab_status_server:
-        lab_manager = Agent(
-            name="Lab Manager",
-            instructions=(
-"""
+        ),
+    ]
+
+def get_lab_manager_instructions():
+    """Get the instructions for the lab manager agent."""
+    return """
 * You are a lab manager. 
 * Whenever it helps, call the tools to help the user. 
 * Use the device id on the tools to identify the device.
@@ -61,9 +62,21 @@ async def main():
 * If you get an error, use the error tool to report the error using the notify_error tool and halt the process.
 * If you don't have a tool to complete a necessary step, use the notify_error tool to report the error and halt the process. Do not be afraid to halt the process.
 """
-            ),
-            mcp_servers=[arm_server, ot_server, sensor_server, error_server, lab_status_server],
-        )
+
+def create_lab_manager(mcp_servers):
+    """Create and return the lab manager agent with the given MCP servers."""
+    return Agent(
+        name="Lab Manager",
+        instructions=get_lab_manager_instructions(),
+        mcp_servers=mcp_servers,
+    )
+
+async def main():
+    #enable_verbose_stdout_logging()
+    servers = create_mcp_servers()
+    
+    async with servers[0] as arm_server, servers[1] as ot_server, servers[2] as sensor_server, servers[3] as error_server, servers[4] as lab_status_server:
+        lab_manager = create_lab_manager([arm_server, ot_server, sensor_server, error_server, lab_status_server])
 
         # Ask for user input
         user_input = input("Enter your lab automation request: ")
