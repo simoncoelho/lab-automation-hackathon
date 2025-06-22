@@ -1,14 +1,15 @@
 {
   "inputs": [],
   "servers": {
-    "robot-arm-mcp": {
+    "MyRobotMCP": {
       "type": "stdio",
       "command": "dotnet",
       "args": [
         "run",
         "--project",
-        "C:\\Users\\SimonCoelho\\lab-automation-hackathon\\DOTNET\\robot-arm-mcp\\robot-arm-mcp.csproj"
+        "C:\\Users\\SimonCoelho\\lab-automation-hackathon\\DOTNET\\MyRobotMCP\\MyRobotMCP.csproj"
       ]
     }
+
   }
 }
