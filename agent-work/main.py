@@ -37,23 +37,36 @@ async def main():
             },
             cache_tools_list=True,
         )
-    async with arm_server as arm_server, ot_server as ot_server, sensor_server as sensor_server, error_server as error_server:
+    lab_status_server = MCPServerStdio(
+            name="lab_status",
+            params={
+                "command": "python",
+                "args": ["mcp_servers/lab_status.py"],
+            },
+            cache_tools_list=True,
+        )
+    async with arm_server as arm_server, ot_server as ot_server, sensor_server as sensor_server, error_server as error_server, lab_status_server as lab_status_server:
         lab_manager = Agent(
             name="Lab Manager",
             instructions=(
-                "You are a lab manager. "
-                "Whenever it helps, call the tools to help the user. "
-                "Use the device id on the tools to identify the device."
-                "If you need to know the slots on a device, use the get_<device_id>_slots tool."
-                "If you need to know the id of a device, use the get_<device_id>_id tool."
-                "Verify the id and slots of the device before using the tools."
+"""
+* You are a lab manager. 
+* Whenever it helps, call the tools to help the user. 
+* Use the device id on the tools to identify the device.
+* If you need to know the slots on a device, use the get_<device_id>_slots tool.
+* If you need to know the id of a device, use the get_<device_id>_id tool.
+* Verify the id and slots of the device before using the tools.
+* Before operating on a plate, user get_plate_location to find out where the plate is.
+* If you need to move a plate, use the move_plate tool and then set the new plate location using the set_plate_location tool.
+* If you get an error, use the error tool to report the error and halt the process.
+"""
             ),
-            mcp_servers=[arm_server, ot_server, sensor_server, error_server],
+            mcp_servers=[arm_server, ot_server, sensor_server, error_server, lab_status_server],
         )
 
         result = await Runner.run(
             lab_manager,
-            input="The plate is initially in slot 1 on the opentrons device.  Run a pcr process on the opentrons device, then move the plate to the sensor device and analyze the results."
+            input="Using plate_id 1 on the opentrons, run a pcr process on the opentrons device, then move the plate to the sensor device and analyze the results."
             #input="What slots are available on the devices?"
         )
         print("\nFINAL ANSWER ↴\n", result.final_output)
