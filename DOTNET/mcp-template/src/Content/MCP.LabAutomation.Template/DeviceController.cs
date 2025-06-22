@@ -51,6 +51,18 @@ namespace MCP.LabAutomation
             Console.WriteLine("Door closed successfully.");
         }
 
+        public void RunMeasurement(string measurementType)
+        {
+            if (!_isInitialized)
+                throw new InvalidOperationException("Device not initialized. Please initialize the device first.");
+            if (!_doorOpen)
+                throw new InvalidOperationException("Door is closed. Please open the door before running a measurement.");
+            Console.WriteLine($"Running {measurementType} measurement...");
+            // Simulate measurement process
+            Thread.Sleep(2000);
+            Console.WriteLine($"{measurementType} measurement completed successfully.");
+        }
+
         public string GetDeviceStatus()
         {
             if (!_isInitialized)

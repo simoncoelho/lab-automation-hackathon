@@ -21,6 +21,20 @@ public static class DeviceControllerTool
         return "Robot arm initialized successfully.";
     }
 
+    [McpServerTool, Description("Moves the device to a specified position.")]
+    public static string RunMeasurement(DeviceController controller, string measurementType)
+    {
+        try
+        {
+            controller.RunMeasurement(measurementType);
+        }
+        catch (Exception ex)
+        {
+            return $"Error running measurement: {ex.Message}";
+        }
+        return $"Measurement '{measurementType}' completed successfully.";
+    }
+
     [McpServerTool, Description("Gets the current status of the device.")]
     public static string GetStatus(DeviceController controller)
     {
