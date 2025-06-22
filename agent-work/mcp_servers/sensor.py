@@ -13,6 +13,7 @@ def get_sensor_data(slot: str) -> dict:
 def get_sensor_id() -> str:
     """Get the id of the sensor device."""
     return "sensor"
+
 @mcp.tool()
 def get_sensor_slots() -> list[str]:
     """Get the slots of the device."""

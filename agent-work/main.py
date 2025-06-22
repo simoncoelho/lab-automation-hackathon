@@ -58,16 +58,19 @@ async def main():
 * Verify the id and slots of the device before using the tools.
 * Before operating on a plate, user get_plate_location to find out where the plate is.
 * If you need to move a plate, use the move_plate tool and then set the new plate location using the set_plate_location tool.
-* If you get an error, use the error tool to report the error and halt the process.
+* If you get an error, use the error tool to report the error using the notify_error tool and halt the process.
+* If you don't have a tool to complete a necessary step, use the notify_error tool to report the error and halt the process. Do not be afraid to halt the process.
 """
             ),
             mcp_servers=[arm_server, ot_server, sensor_server, error_server, lab_status_server],
         )
 
+        # Ask for user input
+        user_input = input("Enter your lab automation request: ")
+        
         result = await Runner.run(
             lab_manager,
-            input="Using plate_id 1 on the opentrons, run a pcr process on the opentrons device, then move the plate to the sensor device and analyze the results."
-            #input="What slots are available on the devices?"
+            input=user_input
         )
         print("\nFINAL ANSWER ↴\n", result.final_output)
 
