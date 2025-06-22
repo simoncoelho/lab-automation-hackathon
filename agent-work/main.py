@@ -44,8 +44,8 @@ async def main():
                 "You are a lab manager. "
                 "Whenever it helps, call the tools to help the user. "
                 "Use the device id on the tools to identify the device."
-                "If you need to know the slots on a device, use the device://<device_id>/slots resource."
-                "If you need to know the id of a device, use the device://<device_id>/id resource."
+                "If you need to know the slots on a device, use the get_<device_id>_slots tool."
+                "If you need to know the id of a device, use the get_<device_id>_id tool."
                 "Verify the id and slots of the device before using the tools."
             ),
             mcp_servers=[arm_server, ot_server, sensor_server, error_server],

@@ -9,13 +9,12 @@ def get_sensor_data(slot: str) -> dict:
     print(f"Getting sensor data from slot {slot}", file=sys.stderr, flush=True)
     return {"status": "success", "data": "beep boop"}
 
-@mcp.tool("device://sensor/id")
-def device_id() -> str:
-    """Get the id of the device."""
+@mcp.tool()
+def get_sensor_id() -> str:
+    """Get the id of the sensor device."""
     return "sensor"
-
-@mcp.resource("device://sensor/slots")
-def device_slots() -> list[str]:
+@mcp.tool()
+def get_sensor_slots() -> list[str]:
     """Get the slots of the device."""
     return ["a", "b"]
 
