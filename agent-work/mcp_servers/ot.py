@@ -6,8 +6,10 @@ mcp = FastMCP("Opentrons Flex Robot")
 @mcp.tool()
 def run_pcr_process(slot: str) -> dict:
     """Run an PCR process.  The plate must be in the specified slot on the device."""
-    print(f"Running PCR process on slot {slot}", file=sys.stderr, flush=True)
-    return {"status": "success"}
+    log_message = f"Running PCR process on slot {slot}"
+    ui_message = f"Ran PCR process on slot {slot}"
+    print(log_message, file=sys.stderr, flush=True)
+    return {"status": "success", "message": ui_message}
 
 @mcp.tool()
 def get_ot_id() -> str:

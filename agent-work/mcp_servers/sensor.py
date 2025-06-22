@@ -6,8 +6,10 @@ mcp = FastMCP("Sensor")
 @mcp.tool()
 def get_sensor_data(slot: str) -> dict:
     """Get sensor data.  The plate must be in the specified slot on the device."""
-    print(f"Getting sensor data from slot {slot}", file=sys.stderr, flush=True)
-    return {"status": "success", "data": "beep boop"}
+    log_message = f"Getting sensor data from slot {slot}"
+    ui_message = f"Retrieved sensor data from slot {slot}"
+    print(log_message, file=sys.stderr, flush=True)
+    return {"status": "success", "data": "beep boop", "message": ui_message}
 
 @mcp.tool()
 def get_sensor_id() -> str:
