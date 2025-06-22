@@ -24,7 +24,7 @@ public static class DeviceControllerTool
     [McpServerTool, Description("Gets the current status of the device.")]
     public static string GetStatus(DeviceController controller)
     {
-        return controller.GetCurrentPosition();
+        return controller.GetDeviceStatus();
     }
 
     [McpServerTool, Description("Opens the door of the device.")]

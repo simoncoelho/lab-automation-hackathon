@@ -57,5 +57,10 @@ namespace MCP.LabAutomation
                 return "Device not initialized.";
             return _doorOpen ? "Device is ready with door open." : "Device is ready with door closed.";
         }
+
+        public void Dispose()
+        {
+            Console.WriteLine("Disposing of resources...");
+        }
     }
 }
