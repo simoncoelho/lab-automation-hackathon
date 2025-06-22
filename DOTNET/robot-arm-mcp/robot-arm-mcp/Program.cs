@@ -3,6 +3,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using ModelContextProtocol.Server;
 using System.ComponentModel;
+using robot_arm_mcp; // Adjust namespace as needed
 
 // Create a generic host builder for
 // dependency injection, logging, and configuration.
